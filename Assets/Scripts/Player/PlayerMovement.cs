@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             StaminaRegen();
 
             if (!GetComponent<PlayerHealthSystem>().getHit)
-                {
+            {
                 if (isGrounded)
                 {
                     canAirAttack = true;
@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
                     rigidbody.velocity = Vector2.zero;
                     if (!attacking)
                     {
-                        
+
                     }
                 }
             }

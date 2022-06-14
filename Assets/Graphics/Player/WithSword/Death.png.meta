@@ -807,7 +807,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Death_29: -314297031
       Death_30: -748809263
       Death_19: -1021279034
       Death_7: 961082470
@@ -835,6 +834,7 @@ TextureImporter:
       Death_23: -1672574025
       Death_32: 826307438
       Death_12: 1622689820
+      Death_29: -314297031
       Death_16: 1288922596
       Death_18: -507308054
       Death_27: -36935991

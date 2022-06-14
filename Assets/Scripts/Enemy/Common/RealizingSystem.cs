@@ -3,8 +3,10 @@ using UnityEngine;
 public class RealizingSystem : MonoBehaviour
 {
     [SerializeField] bool circleRealizing;
+    [SerializeField] bool twoDirectionBoxRealizing;
 
     [SerializeField] float realizeRadius;
+    [SerializeField] float outRealizeRadius;
 
     [SerializeField] float realizeDistanceX;
     [SerializeField] float realizeDistanceY;
@@ -85,7 +87,7 @@ public class RealizingSystem : MonoBehaviour
                 realizedPlayer = true;
                 excMarkCd = markCooldown;
             }
-            else
+            else if (Vector2.Distance(center.position, player.transform.position) > outRealizeRadius)
             {
                 realizedPlayer = false;
                 qstMarkCd = markCooldown;
@@ -93,33 +95,61 @@ public class RealizingSystem : MonoBehaviour
         }
         else
         {
-            if (transform.eulerAngles == new Vector3(0,0,0))
+            if (twoDirectionBoxRealizing)
             {
-                viewPoint = new Vector2(center.position.x + realizeDistanceX, center.position.y);
+                if (player != null)
+                {
+                    if (player.GetComponent<PlayerMovement>().isGrounded)
+                    {
+                        if (!realizedPlayer)
+                        {
+                            if (Mathf.Abs(center.position.x - player.transform.position.x) < realizeDistanceX && Mathf.Abs(center.position.y - player.transform.position.y) < realizeDistanceY)
+                            {
+                                realizedPlayer = true;
+                                excMarkCd = markCooldown;
+                            }
+                        }
+                        else
+                        {
+                            if (Mathf.Abs(center.transform.position.x - player.transform.position.x) > realizeDistanceX * 3 || Mathf.Abs(center.transform.position.y - player.transform.position.y) > realizeDistanceY)
+                            {
+                                realizedPlayer = false;
+                                qstMarkCd = markCooldown;
+                            }
+                        }
+                    }
+                }
             }
             else
             {
-                viewPoint = new Vector2(center.position.x - realizeDistanceX, center.position.y);
-            }
-
-            if (player != null)
-            {
-                if (player.GetComponent<PlayerMovement>().isGrounded)
+                if (transform.eulerAngles == new Vector3(0, 0, 0))
                 {
-                    if (!realizedPlayer)
+                    viewPoint = new Vector2(center.position.x + realizeDistanceX, center.position.y);
+                }
+                else
+                {
+                    viewPoint = new Vector2(center.position.x - realizeDistanceX, center.position.y);
+                }
+
+                if (player != null)
+                {
+                    if (player.GetComponent<PlayerMovement>().isGrounded)
                     {
-                        if (Mathf.Abs(viewPoint.x - player.transform.position.x) < realizeDistanceX && Mathf.Abs(viewPoint.y - player.transform.position.y) < realizeDistanceY)
+                        if (!realizedPlayer)
                         {
-                            realizedPlayer = true;
-                            excMarkCd = markCooldown;
+                            if (Mathf.Abs(viewPoint.x - player.transform.position.x) < realizeDistanceX && Mathf.Abs(viewPoint.y - player.transform.position.y) < realizeDistanceY)
+                            {
+                                realizedPlayer = true;
+                                excMarkCd = markCooldown;
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (Mathf.Abs(center.transform.position.x - player.transform.position.x) > realizeDistanceX * 2 || Mathf.Abs(center.transform.position.y - player.transform.position.y) > realizeDistanceY)
+                        else
                         {
-                            realizedPlayer = false;
-                            qstMarkCd = markCooldown;
+                            if (Mathf.Abs(center.transform.position.x - player.transform.position.x) > realizeDistanceX * 2 || Mathf.Abs(center.transform.position.y - player.transform.position.y) > realizeDistanceY)
+                            {
+                                realizedPlayer = false;
+                                qstMarkCd = markCooldown;
+                            }
                         }
                     }
                 }
@@ -134,10 +164,18 @@ public class RealizingSystem : MonoBehaviour
         if (circleRealizing)
         {
             Gizmos.DrawWireSphere(center.position, realizeRadius);
+            Gizmos.DrawWireSphere(center.position, outRealizeRadius);
         }
         else
         {
-            Gizmos.DrawWireCube(viewPoint, new Vector2(realizeDistanceX * 2, realizeDistanceY * 2));
+            if (twoDirectionBoxRealizing)
+            {
+                Gizmos.DrawWireCube(center.position, new Vector2(realizeDistanceX, realizeDistanceY));
+            }
+            else
+            {
+                Gizmos.DrawWireCube(new Vector2(center.position.x + realizeDistanceX, center.position.y), new Vector2(realizeDistanceX * 2, realizeDistanceY * 2));
+            }
         }
     }
 }

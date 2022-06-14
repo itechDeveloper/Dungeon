@@ -87,8 +87,11 @@ public class EnemyHealthSystem : MonoBehaviour
                     animator.SetTrigger("getHit");
                     animator.SetBool("hit", true);
 
-                    hitCounter++;
-                    hitCounterCooldown = startHitCounterCooldown;
+                    if (rageCooldown <= 0)
+                    {
+                        hitCounter++;
+                        hitCounterCooldown = startHitCounterCooldown;
+                    }
 
                     Instantiate(hitEffect, effectPos.position, Quaternion.identity);
 
@@ -156,8 +159,13 @@ public class EnemyHealthSystem : MonoBehaviour
         if (!dead)
         {
             animator.SetTrigger("death");
+            animator.SetBool("dead", true);
             dead = true;
             Instantiate(deathEffect, effectPos.position, Quaternion.identity);
+        }
+        else
+        {
+            rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
     }
 

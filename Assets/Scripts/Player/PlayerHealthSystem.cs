@@ -22,14 +22,9 @@ public class PlayerHealthSystem : MonoBehaviour
         SetMaxHealth();
     }
 
-    void Update()
-    {
-        
-    }
-
     public void TakeDamage(float damage)
     {
-        if (canTakeDamage)
+        if (canTakeDamage && !dead)
         {
             currentHealth -= damage;
             SetHealth(currentHealth);

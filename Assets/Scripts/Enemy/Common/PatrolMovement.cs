@@ -8,6 +8,7 @@ public class PatrolMovement : MonoBehaviour
     RealizingSystem realizingSystem;
     EnemyHealthSystem enemyHealthSystem;
 
+    Collider2D groundInfo;
     [SerializeField] Transform groundCheckPos;
     [SerializeField] float groundCheckRadius;
     [SerializeField] LayerMask whatIsGround;
@@ -33,6 +34,8 @@ public class PatrolMovement : MonoBehaviour
 
     void Update()
     {
+        groundInfo = Physics2D.OverlapCircle(groundCheckPos.position, groundCheckRadius, whatIsGround);
+
         if (!realizingSystem.realizedPlayer && !enemyHealthSystem.getHit && !enemyHealthSystem.dead)
         {
             MakePatrolMovement();
@@ -46,8 +49,6 @@ public class PatrolMovement : MonoBehaviour
 
     void MakePatrolMovement()
     {
-        Collider2D groundInfo = Physics2D.OverlapCircle(groundCheckPos.position, groundCheckRadius, whatIsGround);
-
         if (patrolTimer > 0)
         {
             makePatrolMovement = true;

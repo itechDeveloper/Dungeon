@@ -294,7 +294,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -736410941, guid: 82b1c67d9242ff54a9c91312790160b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  deathEffect: {fileID: 2380983215187812855, guid: 2926cae9e0ff5ae439832ab3b7bdbb12, type: 3}
+  deathEffect: {fileID: 2380983215187812855, guid: b2c52f3575e55e84bbcea6b3ffffaebc, type: 3}
   startHitCounterCooldown: 0.5
   hitEffect: {fileID: 2380983215187812855, guid: 91f3d762735c9cc44b0fe5f80883b300, type: 3}
   effectPos: {fileID: 8559039776622899350}
@@ -383,7 +383,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circleRealizing: 0
+  twoDirectionBoxRealizing: 0
   realizeRadius: 0
+  outRealizeRadius: 0
   realizeDistanceX: 5
   realizeDistanceY: 2
   center: {fileID: 8559039776622899350}
@@ -403,8 +405,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  canChase: 1
+  canRun: 0
   chaseRange: 2
-  startChaseCooldown: 2
   groundCheckPos: {fileID: 8559039775689315008}
   groundCheckRadius: 0.1
   whatIsGround:

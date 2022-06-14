@@ -12,11 +12,10 @@ public class EnemyChasingSystem : MonoBehaviour
 
     [SerializeField] float speed;
 
-    internal bool canChase;
-    internal bool canRun;
+    public bool canChase;
+    public bool canRun;
 
     [SerializeField] float chaseRange;
-    public float startChaseCooldown;
 
     Collider2D groundInfo;
     [SerializeField] Transform groundCheckPos;
@@ -37,16 +36,13 @@ public class EnemyChasingSystem : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         realizingSystem = GetComponent<RealizingSystem>();
-
-        canChase = true;
-        canRun = false;
     }
 
     void Update()
     {
         if (player != null)
         {
-            if (realizingSystem.realizedPlayer && !GetComponent<EnemyHealthSystem>().getHit)
+            if (realizingSystem.realizedPlayer && !GetComponent<EnemyHealthSystem>().getHit && !GetComponent<EnemyHealthSystem>().dead)
             {
                 groundInfo = Physics2D.OverlapCircle(groundCheckPos.position, groundCheckRadius, whatIsGround);
                 distanceBetweenPlayer = Mathf.Abs(transform.position.x - player.transform.position.x);
